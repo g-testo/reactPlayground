@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from "react";
 import "./App.css";
 
-function App() {
-    let [pokemonList, setPokemonList] = useState([]);
-    // Update often, onRender
-    // Lifecycle
-    useEffect(() => {
-        // onload
-        fetch("https://pokemon-backend-dfea.onrender.com/api/pokemon")
-            .then((res) => res.json())
-            .then((pokemonData) => {
-                setPokemonList(pokemonData);
-            });
-    }, []);
-
-    let handleDivOnclick = () => {
-        console.log("Pokemon Clicked");
+let Button = (props) => {
+    const handleButtonClick = () => {
+        alert("Trigger");
     };
 
-    let pokemonElToDisplay = pokemonList.map((pokemon) => {
-        return (
-            <div key={pokemon.name} onClick={handleDivOnclick}>
-                <img width="75" src={pokemon.official_artwork_default} alt={pokemon.name} />
-                <p>{pokemon.name}</p>
-            </div>
-        );
-    });
+    // let colorOfText;
+    // if(props.textColor){
+    //     colorOfText = props.textColor;
+    // } else {
+    //     colorOfText= "blue";
+    // }
+    let colorOfText = props.textColor ? props.textColor : "blue";
+    return (
+        <button onClick={handleButtonClick} style={{ color: colorOfText, margin: "10px", padding: "5px" }}>
+            {props.text}
+        </button>
+    );
+};
 
-    return <div className="App">{pokemonElToDisplay}</div>;
+function App() {
+    return (
+        <div className="App">
+            <Button textColor="red" text="Click me" />
+            <Button textColor="green" text="Submit" />
+            <Button text="Learn More" />
+            <Button text="Button 1" />
+            <Button text="Button 2" />
+        </div>
+    );
 }
 
 export default App;
